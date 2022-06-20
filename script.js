@@ -1,14 +1,37 @@
-let navbar = document.querySelector('.header .navbar');
-let menuBtn = document.querySelector('#menu-btn');
+let $navbar = document.querySelector('.header .navbar');
+let $menuBtn = document.querySelector('#menu-btn');
+let $previewContainer = document.querySelector('.food-preview-container');
+let $previewBox = $previewContainer.querySelectorAll('.food-preview');
 
-menuBtn.onclick = () =>{
-   menuBtn.classList.toggle('fa-times');
-   navbar.classList.toggle('active');
+$menuBtn.onclick = () =>{
+   $menuBtn.classList.toggle('fa-times');
+   $navbar.classList.toggle('active');
 };
 
 window.onscroll = () =>{
-   menuBtn.classList.remove('fa-times');
-   navbar.classList.remove('active');
+   $menuBtn.classList.remove('fa-times');
+   $navbar.classList.remove('active');
+};
+
+let $foodslides = document.querySelectorAll('.food .slide')
+$foodslides.forEach(food =>{
+   food.onclick = () =>{
+      $previewContainer.style.display = 'flex';
+      let name = food.getAttribute('data-name');
+      $previewBox.forEach(preveiw =>{
+         let target = preveiw.getAttribute('data-target');
+         if(name == target){
+            preveiw.classList.add('active');
+         }
+      });
+   };
+});
+
+$previewContainer.querySelector('#close-preview').onclick = () =>{
+   $previewContainer.style.display = 'none';
+   $previewBox.forEach(close =>{
+      close.classList.remove('active');
+   });
 };
 
 var swiper = new Swiper(".home-slider", {
@@ -42,29 +65,6 @@ var swiper = new Swiper(".food-slider", {
       },
    },
 });
-
-let previewContainer = document.querySelector('.food-preview-container');
-let previewBox = previewContainer.querySelectorAll('.food-preview');
-
-document.querySelectorAll('.food .slide').forEach(food =>{
-   food.onclick = () =>{
-      previewContainer.style.display = 'flex';
-      let name = food.getAttribute('data-name');
-      previewBox.forEach(preveiw =>{
-         let target = preveiw.getAttribute('data-target');
-         if(name == target){
-            preveiw.classList.add('active');
-         }
-      });
-   };
-});
-
-previewContainer.querySelector('#close-preview').onclick = () =>{
-   previewContainer.style.display = 'none';
-   previewBox.forEach(close =>{
-      close.classList.remove('active');
-   });
-};
 
 var swiper = new Swiper(".menu-slider", {
    grabCursor:true,
